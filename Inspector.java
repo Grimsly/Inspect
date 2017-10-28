@@ -29,17 +29,15 @@ public class Inspector
                             
             }
         }else{
-    Class ObjClass = obj.getClass();
+            Class ObjClass = obj.getClass();
 
-	System.out.println("Class: " + obj + " (recursive = "+recursive+")");
+            System.out.println("Class: " + obj + " (recursive = "+recursive+")");
     
-    inspectSuper(obj, ObjClass, recursive);
-    inspectInterfaces(obj, ObjClass, recursive);
-    inspectMethods(ObjClass);
-    inspectContructors(ObjClass);
-	
-	//inspect the current class
-	inspectFields(obj, ObjClass, recursive);
+            inspectSuper(obj, ObjClass, recursive);
+            inspectInterfaces(obj, ObjClass, recursive);
+            inspectMethods(ObjClass);
+            inspectContructors(ObjClass);
+            inspectFields(obj, ObjClass, recursive);
         }
     }
     
@@ -171,7 +169,6 @@ public class Inspector
     private boolean checkArray(Object obj){
         try{
             if (obj.getClass().isArray()){
-                
                 return true;
             }else{
                 return false;
