@@ -1,20 +1,4 @@
-/*==========================================================================
-File: ObjectInspector.java
-Purpose:Demo Object inspector for the Asst2TestDriver
-
-Location: University of Calgary, Alberta, Canada
-Created By: Jordan Kidney
-Created on:  Oct 23, 2005
-Last Updated: Oct 23, 2005
-
-***********************************************************************
-If you are going to reproduce this code in any way for your asignment 
-rember to include my name at the top of the file toindicate where you
-got the original code from
-***********************************************************************
-
-
-========================================================================*/
+/*Modified from Jordan Kidney's original objectInspector*/
 
 import java.util.*;
 import java.lang.reflect.*;
@@ -26,8 +10,7 @@ public class Inspector
     private Modifier modCheck = new Modifier();
     
     public Inspector() { }
-
-    //-----------------------------------------------------------
+    
     public void inspect(Object obj, boolean recursive)
     {
         if (checkArray(obj)){
@@ -59,7 +42,6 @@ public class Inspector
 	inspectFields(obj, ObjClass, recursive);
         }
     }
-    //-----------------------------------------------------------
     
     private void inspectSuper(Object obj, Class objClass, boolean recursive){
         if (objClass.getSuperclass() != null){
