@@ -14,20 +14,7 @@ public class Inspector
     public void inspect(Object obj, boolean recursive)
     {
         if (checkArray(obj)){
-            int length = Array.getLength(obj);
-            System.out.println("Field: " + "Component type: " + obj.getClass().getComponentType() + ", Name: " + obj.getClass().getName() + ", Length: " + length);
-            for (int i = 0; i < length; i ++) {
-                Object arrayElement = Array.get(obj, i);
-                System.out.println("[" + i + "] " + arrayElement);
-                if (checkArray(arrayElement)){
-                    int length2 = Array.getLength(arrayElement);
-                    for (int j = 0; j < length2; j ++){
-                        Object arrayElement2 = Array.get(arrayElement, j);
-                        System.out.println("[" + i + "]" + "[" + j + "] " + arrayElement2);
-                    }
-                }
-                            
-            }
+            printArray(obj);
         }else{
             Class ObjClass = obj.getClass();
 
@@ -46,13 +33,7 @@ public class Inspector
             Class superClass = objClass.getSuperclass();
             System.out.println(".................");
             System.out.println("Superclass: " + superClass.getName());
-            System.out.println("_______________________________________");
-            inspectSuper(obj, superClass, recursive);
-            inspectInterfaces(obj, superClass, recursive);
-            inspectMethods(superClass);
-            inspectContructors(superClass);
-            inspectFields(obj, superClass, recursive);
-            System.out.println(".................");
+            superDeclaredPrint(obj, superClass, recursive);
         }
     }
     
@@ -60,14 +41,8 @@ public class Inspector
         for (Class c : objClass.getInterfaces()){
             System.out.println(".................");
             System.out.println("Interface: " + c.getName());
-            System.out.println("_______________________________________");
-            inspectSuper(obj, c, recursive);
-            inspectInterfaces(obj, c, recursive);
-            inspectMethods(c);
-            inspectContructors(c);
-            inspectFields(obj, c, recursive);
-            System.out.println(".................");
-        }
+            superDeclaredPrint(obj, c, recursive);
+        }    
     }
     
     private void inspectMethods(Class objClass){
@@ -109,20 +84,7 @@ public class Inspector
                 try{
 		
                     if((!f.getType().isPrimitive()) && checkArray(f.get(obj))){
-                        int length = Array.getLength(f.get(obj));
-                        System.out.println("Field: " + "Component type: " + f.get(obj).getClass().getComponentType() + ", Name: " + f.getName() + ", Length: " + length);
-                        for (int i = 0; i < length; i ++) {
-                            Object arrayElement = Array.get(f.get(obj), i);
-                            System.out.println("[" + i + "] " + arrayElement);
-                            if (checkArray(arrayElement)){
-                                int length2 = Array.getLength(arrayElement);
-                                for (int j = 0; j < length2; j ++){
-                                    Object arrayElement2 = Array.get(arrayElement, j);
-                                    System.out.println("[" + i + "]" + "[" + j + "] " + arrayElement);
-                                }
-                            }
-                            
-                        }
+                        printArray(f.get(obj));
                         
                     }else if((!f.getType().isPrimitive()) && recursive){
 
@@ -150,6 +112,17 @@ public class Inspector
         }
     }
     
+    private void superDeclaredPrint(Object obj, Class c, boolean recursive){
+        System.out.println("_______________________________________");
+        inspectSuper(obj, c, recursive);
+        inspectInterfaces(obj, c, recursive);
+        inspectMethods(c);
+        inspectContructors(c);
+        inspectFields(obj, c, recursive);
+        System.out.println(".................");
+        
+    }
+    
     private boolean checkArray(Object obj){
         try{
             if (obj.getClass().isArray()){
@@ -159,6 +132,23 @@ public class Inspector
             }
         }catch(Exception e){
             return false;
+        }
+    }
+    
+    private void printArray(Object obj){
+        int length = Array.getLength(obj);
+        System.out.println("Field: " + "Component type: " + obj.getClass().getComponentType() + ", Name: " + obj.getClass().getName() + ", Length: " + length);
+        for (int i = 0; i < length; i ++) {
+            Object arrayElement = Array.get(obj, i);
+            System.out.println("[" + i + "] " + arrayElement);
+            if (checkArray(arrayElement)){
+                int length2 = Array.getLength(arrayElement);
+                for (int j = 0; j < length2; j ++){
+                    Object arrayElement2 = Array.get(arrayElement, j);
+                    System.out.println("[" + i + "]" + "[" + j + "] " + arrayElement2);
+                }
+            }
+                            
         }
     }
 }
