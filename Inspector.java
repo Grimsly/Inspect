@@ -108,23 +108,7 @@ public class Inspector
                 
                 try{
 		
-                    if((!f.getType().isPrimitive()) && recursive && checkArray(f.get(obj))){
-                        int length = Array.getLength(f.get(obj));
-                        System.out.println("Field: " + "Component type: " + f.get(obj).getClass().getComponentType() + ", Name: " + f.getName() + ", Length: " + length);
-                        for (int i = 0; i < length; i ++) {
-                            Object arrayElement = Array.get(f.get(obj), i);
-                            System.out.println("[" + i + "] " + arrayElement);
-                            if (checkArray(arrayElement)){
-                                int length2 = Array.getLength(arrayElement);
-                                for (int j = 0; j < length2; j ++){
-                                    Object arrayElement2 = Array.get(arrayElement, j);
-                                    System.out.println("[" + i + "]" + "[" + j + "] " + arrayElement);
-                                }
-                            }
-                            
-                        }
-                        
-                    }else if((!f.getType().isPrimitive()) && (recursive == false) && checkArray(f.get(obj))){
+                    if((!f.getType().isPrimitive()) && checkArray(f.get(obj))){
                         int length = Array.getLength(f.get(obj));
                         System.out.println("Field: " + "Component type: " + f.get(obj).getClass().getComponentType() + ", Name: " + f.getName() + ", Length: " + length);
                         for (int i = 0; i < length; i ++) {
